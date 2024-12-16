@@ -253,6 +253,10 @@ else
     exit 1
 fi
 
+#Disable IPv6 adress ::1
+echo -e "${BLUE}Disable IPv6 address${NC}"
+sed -i '/^::1/s/^/#/g' /etc/hosts
+
 # Update apt so we can search apt-cache for newest Tomcat version supported & libmariadb-java/libmysql-java
 echo -e "${BLUE}Updating apt...${NC}"
 apt-get -qq update
@@ -289,6 +293,7 @@ libswscale-dev freerdp2-dev libpango1.0-dev libssh2-1-dev libtelnet-dev libvncse
 libvorbis-dev libwebp-dev libwebsockets-dev freerdp2-x11 libtool-bin ghostscript dpkg-dev wget crudini libc-bin \
 ${MYSQL} ${LIBJAVA} &>> ${LOG}
 
+# Install tomcat via debian 11 packages
 echo "deb http://deb.debian.org/debian/ bullseye main" > /etc/apt/sources.list.d/bullseye.list 
 apt-get -qq update
 apt-get -y install ${TOMCAT}
